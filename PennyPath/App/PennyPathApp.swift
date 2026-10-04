@@ -41,26 +41,7 @@ struct PennyPathApp: App {
     
     // MARK: - Body
     var body: some Scene {
-        WindowGroup {
-            RootView()
-                .tint(AppColor.accent)
-                .background(AppColor.background)
-        }
-        .modelContainer(
-            sharedModelContainer
-        )
-        .windowResizability(.contentSize)
-        
-        #if os(macOS)
-        .windowStyle(.hiddenTitleBar)
-        .windowIdealSize(.fitToContent)
-        #endif
     }
+        
 }
 
-#Preview {
-    RootView()
-        .tint(AppColor.accent)
-        .background(AppColor.background)
-    
-}

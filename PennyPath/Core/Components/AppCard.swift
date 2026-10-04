@@ -1,29 +1,33 @@
-//
-//  AppCard.swift
-//  PennyPath
-//
-//  Created by Eren Akkoç on 5.08.2026.
-//
-
-
 import SwiftUI
 
 struct AppCard<Content: View>: View {
-
-    @ViewBuilder
-    let content: Content
+    @ViewBuilder let content: Content
 
     var body: some View {
         content
-            .padding(Spacing.md)
+            .padding(.spMD)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(AppColor.backgroundSecondary)
-            .overlay {
-                RoundedRectangle(cornerRadius: CornerRadius.medium)
-                    .stroke(AppColor.border, lineWidth: 1)
+            .background {
+                // Arka plan ve çerçeve hatasız şekilde birleşti
+                RoundedRectangle(cornerRadius: .cornerMedium, style: .continuous)
+                    .fill(AppColor.backgroundSecondary)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: .cornerMedium, style: .continuous)
+                            .stroke(AppColor.border, lineWidth: 1) // Sizin kendi renk sabitiniz
+                    }
             }
-            .clipShape(
-                RoundedRectangle(cornerRadius: CornerRadius.medium)
-            )
+            .clipShape(RoundedRectangle(cornerRadius: .cornerMedium, style: .continuous))
     }
+}
+
+
+#Preview {
+    AppCard(content: {
+        Button("Merhaba") {
+            print("Buton Tetiklendi.")
+        }
+        .buttonStyle(.primary)
+        
+        
+    })
 }
