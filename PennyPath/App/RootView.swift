@@ -53,9 +53,9 @@ struct RootView: View {
         } detail: {
             Group {
                 switch selection {
-                case .dashboard: DashboardView()
-                case .transactions: TransactionsView()
-                case nil: DashboardView()
+                    case .dashboard: DashboardView()
+                    case .transactions: TransactionsView()
+                    case nil: DashboardView()
                 }
             }
             .frame(
