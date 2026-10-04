@@ -60,10 +60,9 @@ struct RootView: View {
         } detail: {
             Group {
                 switch selection {
-                case .dashboard: DashboardView()
-                case .transactions: TransactionsView()
-                case .settings: SettingsView()
-                case nil: DashboardView()
+                    case .dashboard: DashboardView()
+                    case .transactions: TransactionsView()
+                    case nil: DashboardView()
                 }
             }
             .frame(
@@ -81,7 +80,6 @@ struct RootView: View {
 enum SidebarItem: String, CaseIterable, Identifiable {
     case dashboard
     case transactions
-    case settings
     
     var id: String {rawValue}
     var title: String {
@@ -89,7 +87,6 @@ enum SidebarItem: String, CaseIterable, Identifiable {
         switch self {
         case .dashboard: return "Kontrol Paneli"
         case .transactions: return "İşlemler"
-        case .settings: return "Ayarlar"
         }
     }
     
@@ -97,7 +94,6 @@ enum SidebarItem: String, CaseIterable, Identifiable {
         switch self {
         case .dashboard: return "house"
         case .transactions: return "list.bullet"
-        case .settings: return "gear"
         }
     }
 }

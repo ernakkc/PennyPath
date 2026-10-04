@@ -10,7 +10,6 @@ import SwiftUI
 struct ButtonComp: View {
 
     // MARK: - Properties
-
     let title: String
     let action: () -> Void
 

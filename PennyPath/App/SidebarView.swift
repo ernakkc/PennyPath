@@ -29,13 +29,12 @@ struct SidebarView: View {
         }
         .listStyle(.sidebar)
         .scrollContentBackground(.hidden)
-        .background(AppColor.background)
+        .background(AppColor.backgroundSecondary)
     }
 }
 
 
 // MARK: - Sidebar Row
-
 private struct SidebarRow: View {
     
     let item: SidebarItem
