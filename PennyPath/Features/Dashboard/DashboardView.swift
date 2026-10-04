@@ -28,10 +28,10 @@ private extension DashboardView {
         VStack {
             HStack {
                 Text("Ana Sayfa")
-                    .font(.largeTitle)
-                    .bold()
+                    .font(AppFont.title)
+                    .foregroundStyle(AppColor.primaryText)
                 Spacer()
-                Button("+ İşlem Ekle", action: {showAddSheet = true}).buttonStyle(.borderedProminent)
+                Button("+ İşlem Ekle", action: {showAddSheet = true}).buttonStyle(.primary).cornerRadius(.cornerLarge)
             }
             
             HStack {
@@ -238,4 +238,5 @@ private extension DashboardView {
 */
 #Preview {
     DashboardView()
+        .background(AppColor.background)
 }

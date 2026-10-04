@@ -22,7 +22,6 @@ struct PrimaryButtonStyle: ButtonStyle {
         configuration.label
             .font(.headline)
             .foregroundStyle(.white)
-            .frame(maxWidth: .infinity)
             .frame(minHeight: minHeight) // Erişilebilirlik için dinamik yükseklik
             .padding(.horizontal, 16)
             .background {
