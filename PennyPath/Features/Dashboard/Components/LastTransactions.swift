@@ -43,9 +43,9 @@ struct TransactionCard: View {
     @State var transaction: Transaction
     
     var body: some View {
-        HStack (spacing: Spacing.sm) {
+        HStack (spacing: .spMD) {
             VStack {
-                Text(transaction.title).font(AppFont.callout.weight(.semibold))
+                Text(transaction.title)
                 Text(transaction.date.formatted(date: .abbreviated, time: .omitted))
                     .foregroundColor(AppColor.secondaryText)
             }
