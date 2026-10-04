@@ -27,7 +27,7 @@ struct PennyPathApp: App {
                 configurations: [modelConfiguration]
             )
             SeedData.seedIfNeeded(
-                using: container
+                using: container.mainContext
             )
             return container
             
@@ -41,7 +41,17 @@ struct PennyPathApp: App {
     
     // MARK: - Body
     var body: some Scene {
-    }
+        WindowGroup {
+            RootView()
+                .tint(AppColor.accent)
+                .background(AppColor.background)
+        }
+        .modelContainer(sharedModelContainer)
+        .windowResizability(.contentSize)
         
+        #if os(macOS)
+        .windowStyle(.hiddenTitleBar)
+        .windowIdealSize(.fitToContent)
+        #endif
+    }
 }
-

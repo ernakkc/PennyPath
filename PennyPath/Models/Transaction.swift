@@ -12,9 +12,13 @@ import SwiftData
 @Model
 final class Transaction {
 
-    var id: UUID
+    // 1. Veritabanında çakışmaları önlemek için unique (benzersiz) kıldık
+    @Attribute(.unique) var id: UUID
     var title: String
-    var amount: Double
+    
+    // 2. Parasal hesaplamalarda kuruş kayıplarını önlemek için Decimal'e geçtik
+    var amount: Decimal
+    
     var date: Date
     var type: TransactionType
     var category: Category
@@ -22,7 +26,7 @@ final class Transaction {
 
     init(
         title: String,
-        amount: Double,
+        amount: Decimal,
         date: Date = .now,
         type: TransactionType,
         category: Category,
