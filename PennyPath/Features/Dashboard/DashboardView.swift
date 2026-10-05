@@ -26,13 +26,8 @@ struct DashboardView: View {
 private extension DashboardView {
     var macosLayout: some View {
         VStack {
-            HStack {
-                Text("Ana Sayfa")
-                    .font(AppFont.title)
-                    .foregroundStyle(AppColor.primaryText)
-                Spacer()
-                Button("+ İşlem Ekle", action: {showAddSheet = true}).buttonStyle(.primary).cornerRadius(.cornerLarge)
-            }
+            
+            HeaderButtonCard(showAddSheet: .constant(false))
             
             HStack {
                 
