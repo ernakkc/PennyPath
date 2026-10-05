@@ -30,7 +30,7 @@ private extension DashboardView {
             HeaderButtonCard(showAddSheet: .constant(false))
             
             HStack {
-                
+                GraphCard()
             }
             .padding(16)
             .sheet(isPresented: $showAddSheet) {
