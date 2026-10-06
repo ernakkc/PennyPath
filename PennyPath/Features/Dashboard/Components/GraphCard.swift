@@ -19,11 +19,12 @@ struct GraphCard: View {
     var body: some View {
         AppCard {
             VStack (alignment: .leading){
-                Text("Toplam Bakiye").font(AppFont.headline).foregroundStyle(AppColor.secondaryText)
-                Text(balance.formatted(.currency(code: "TRY")))
+                Text("Toplam Bakiye").font(AppFont.headline).foregroundStyle(AppColor.secondaryText).padding(.spXS)
+                Text(balance.formatted(.currency(code: "TRY"))).font(.system(size: 40).bold()).padding(.spXS)
+                BalanceChartView(balanceHistory: balanceHistory).padding(.spXS)
             }
             
-            BalanceChartView(balanceHistory: balanceHistory)
+            
         }
         .foregroundColor(AppColor.primaryText)
     }
@@ -135,10 +136,4 @@ private func balancePoints(transactions: [Transaction]) -> [BalanceHistory] {
 
 #Preview {
     GraphCard()
-}
-
-#Preview {
-    let balanceHistory: [BalanceHistory] = [
-    ]
-    BalanceChartView(balanceHistory: balanceHistory)
 }
