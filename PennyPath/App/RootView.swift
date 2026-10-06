@@ -53,9 +53,9 @@ struct RootView: View {
         } detail: {
             Group {
                 switch selection {
-                case .dashboard: DashboardView().background(AppColor.background)
-                case .transactions: TransactionsView().background(AppColor.background)
-                case nil: DashboardView().background(AppColor.background)
+                case .dashboard: DashboardView().background(AppColor.background).padding(.spMD)
+                case .transactions: TransactionsView().background(AppColor.background).padding(.spMD)
+                case nil: DashboardView().background(AppColor.background).padding(.spMD)
                 }
             }
             .frame(

@@ -45,6 +45,7 @@ struct PennyPathApp: App {
             RootView()
                 .tint(AppColor.accent)
                 .background(AppColor.background)
+                .preferredColorScheme(.light)
         }
         .modelContainer(sharedModelContainer)
         .windowResizability(.contentSize)

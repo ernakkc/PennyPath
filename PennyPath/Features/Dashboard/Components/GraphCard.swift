@@ -107,8 +107,8 @@ struct EmptyChartView: View {
 
 //MARK: - CALCULATIONS
 private func balanceCalc(transactions: [Transaction]) -> Decimal {
-    var income = transactions.filter { $0.type == .income}.reduce(0) { $0 + $1.amount}
-    var expense = transactions.filter { $0.type == .expense}.reduce(0) { $0 - $1.amount}
+    let income = transactions.filter { $0.type == .income}.reduce(0) { $0 + $1.amount}
+    let expense = transactions.filter { $0.type == .expense}.reduce(0) { $0 - $1.amount}
     return income - expense
 }
 
