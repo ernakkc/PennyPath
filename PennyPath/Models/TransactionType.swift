@@ -9,7 +9,13 @@
 import Foundation
 
 enum TransactionType: String, Codable, CaseIterable {
-    case income
     case expense
-    case transfer
+    case income
+    
+    var title: String {
+        switch self {
+        case .income: return "Gelir"
+        case .expense: return "Gider"
+        }
+    }
 }

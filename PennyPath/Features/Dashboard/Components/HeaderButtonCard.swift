@@ -16,8 +16,9 @@ struct HeaderButtonCard : View {
                 .font(.system(size: 32)).bold()
                 .foregroundStyle(AppColor.primaryText)
             Spacer()
-            Button("+ İşlem Ekle", action: {showAddSheet = true}).buttonStyle(.primary).cornerRadius(.cornerLarge)
+            Button("+ İşlem Ekle", action: {showAddSheet = true}).buttonStyle(.primary).cornerRadius(.cornerMedium)
         }
+        .padding()
     }
 }
 

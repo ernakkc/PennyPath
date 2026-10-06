@@ -49,7 +49,7 @@ enum Category: String, CaseIterable, Codable, Identifiable {
         case .subscriptions: return "repeat.circle.fill"
         case .pets: return "pawprint.fill"
         case .gifts: return "gift.fill"
-        case .savings: return "safe.fill"
+        case .savings: return "bag.fill"
             
         case .other: return "ellipsis.circle.fill"
         }
