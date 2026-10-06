@@ -29,8 +29,13 @@ private extension DashboardView {
             
             HeaderButtonCard(showAddSheet: .constant(false))
             
-            HStack {
+            VStack {
                 GraphCard()
+                
+                HStack {
+                    IncomeCard()
+                    ExpenseCard()
+                }
             }
             .padding(16)
             .sheet(isPresented: $showAddSheet) {
