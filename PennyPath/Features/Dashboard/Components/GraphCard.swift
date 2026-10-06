@@ -23,14 +23,84 @@ struct GraphCard: View {
                 Text(balance.formatted(.currency(code: "TRY")))
             }
             
-            BalanceChartView(BalanceHistory: balanceHistory)
+            BalanceChartView(balanceHistory: balanceHistory)
         }
         .foregroundColor(AppColor.primaryText)
     }
 }
 
+//MARK: - CHART
+struct BalanceChartView: View {
+    let balanceHistory: [BalanceHistory]
+    private var minBalance: Decimal { balanceHistory.map(\.balance).min() ?? 0 }
+    private var maxBalance: Decimal { balanceHistory.map(\.balance).max() ?? 0 }
+    private var chartMin: Decimal { minBalance - max((minBalance - maxBalance) * 0.18, 500)}
+    private var chartMax: Decimal { maxBalance + max((minBalance - maxBalance) * 0.18, 500)}
+    
+    var body: some View {
+        if balanceHistory.isEmpty { EmptyChartView()}
+        else {
+            Chart {
+                ForEach(balanceHistory) { history in
+                    AreaMark(
+                        x: .value("Tarih", history.date),
+                        yStart: .value("Alt", chartMin),
+                        yEnd: .value("Bakiye", history.balance)
+                    )
+                    .interpolationMethod(.monotone)
+                    .foregroundStyle(
+                        LinearGradient(
+                            gradient: Gradient(
+                                colors: [
+                                    AppColor.accent.opacity(0.52),
+                                    AppColor.accent.opacity(0.25),
+                                    AppColor.accent.opacity(0.12),
+                                    AppColor.accent.opacity(0)
+                                    ]
+                            ),
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
+                    
+                    LineMark(
+                        x: .value("Tarih", history.date),
+                        y: .value("Bakiye", history.balance)
+                    )
+                    .interpolationMethod(.monotone)
+                    .lineStyle(
+                        StrokeStyle(
+                            lineWidth: 2.5,
+                            lineCap: .round,
+                            lineJoin: .round
+                        )
+                    )
+                    .foregroundStyle(AppColor.accent)
+                }
+            }
+            .chartYScale(domain: chartMin...chartMax)
+            .chartXAxis(.hidden)
+            .chartYAxis(.hidden)
+            .chartPlotStyle{ plotArea in plotArea.background(Color.clear)}
+            .clipped()
+        }
+    }
+}
 
-
+//MARK: - EMPTY CHART
+struct EmptyChartView: View {
+    var body: some View {
+        VStack(spacing: AppSpacing.sm) {
+            Image(systemName: "chart.line.uptrend.xyaxis")
+                .font(AppFont.title)
+                .foregroundStyle(AppColor.accent.opacity(0.7))
+            Text("Henüz İşlem Yok")
+                .font(AppFont.headline)
+                .foregroundStyle(AppColor.secondaryText)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
 
 
 
@@ -40,6 +110,7 @@ private func balanceCalc(transactions: [Transaction]) -> Decimal {
     var expense = transactions.filter { $0.type == .expense}.reduce(0) { $0 - $1.amount}
     return income - expense
 }
+
 
 //MARK: - BALANCE HISTORY
 struct BalanceHistory: Identifiable {
@@ -64,4 +135,10 @@ private func balancePoints(transactions: [Transaction]) -> [BalanceHistory] {
 
 #Preview {
     GraphCard()
+}
+
+#Preview {
+    let balanceHistory: [BalanceHistory] = [
+    ]
+    BalanceChartView(balanceHistory: balanceHistory)
 }

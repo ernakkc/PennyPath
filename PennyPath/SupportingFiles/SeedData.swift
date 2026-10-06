@@ -42,7 +42,7 @@ enum SeedData {
     // 3. Veri kümesini asıl fonksiyondan ayırarak okunabilirliği artırıyoruz
     private static func generateSamples() -> [Transaction] {
         return [
-            Transaction(title: "Aylık Maaş", amount: 45000, date: date(daysAgo: 30), type: .income, category: .salary, note: "Ağustos maaşı"),
+            Transaction(title: "Aylık Maaş", amount: 20000, date: date(daysAgo: 30), type: .income, category: .salary, note: "Ağustos maaşı"),
             Transaction(title: "Ev Kirası", amount: 12000, date: date(daysAgo: 28), type: .expense, category: .housing), // Yeni kategori: housing
             Transaction(title: "Haftalık Market", amount: 1540.50, date: date(daysAgo: 25, hoursAgo: 2), type: .expense, category: .food),
             Transaction(title: "Freelance Yazılım", amount: 8500, date: date(daysAgo: 20), type: .income, category: .salary, note: "Upwork - API Entegrasyon projesi"),
