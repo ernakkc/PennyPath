@@ -13,7 +13,7 @@ struct HeaderButtonCard : View {
     var body: some View{
         HStack {
             Text("Ana Sayfa")
-                .font(AppFont.title)
+                .font(.system(size: 32)).bold()
                 .foregroundStyle(AppColor.primaryText)
             Spacer()
             Button("+ İşlem Ekle", action: {showAddSheet = true}).buttonStyle(.primary).cornerRadius(.cornerLarge)

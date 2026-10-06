@@ -20,7 +20,7 @@ struct GraphCard: View {
         AppCard {
             VStack (alignment: .leading){
                 Text("Toplam Bakiye").font(AppFont.headline).foregroundStyle(AppColor.secondaryText).padding(.spXS)
-                Text(balance.formatted(.currency(code: "TRY"))).font(.system(size: 40).bold()).padding(.spXS)
+                Text(balance.formatted(.currency(code: "TRY"))).font(.system(size: 35).bold()).padding(.spXS)
                 BalanceChartView(balanceHistory: balanceHistory).padding(.spXS)
             }
             
