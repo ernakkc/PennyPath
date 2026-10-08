@@ -18,7 +18,7 @@ struct HeaderButtonCard : View {
             Spacer()
             Button("+ İşlem Ekle", action: {showAddSheet = true}).buttonStyle(.primary).cornerRadius(.cornerMedium)
         }
-        .padding()
+        .padding(.horizontal, 16)
     }
 }
 
