@@ -55,6 +55,8 @@ struct RootView: View {
                 switch selection {
                 case .dashboard: DashboardView().background(AppColor.background).padding(.spMD)
                 case .transactions: TransactionsView().background(AppColor.background).padding(.spMD)
+                case .reports:
+                    ReportsView().background(AppColor.background).padding(.spMD)
                 case nil: DashboardView().background(AppColor.background).padding(.spMD)
                 }
             }
@@ -73,6 +75,7 @@ struct RootView: View {
 enum SidebarItem: String, CaseIterable, Identifiable {
     case dashboard
     case transactions
+    case reports
     
     var id: String {rawValue}
     var title: String {
@@ -80,6 +83,7 @@ enum SidebarItem: String, CaseIterable, Identifiable {
         switch self {
         case .dashboard: return "Kontrol Paneli"
         case .transactions: return "İşlemler"
+        case .reports: return "Raporlar"
         }
     }
     
@@ -87,6 +91,7 @@ enum SidebarItem: String, CaseIterable, Identifiable {
         switch self {
         case .dashboard: return "house"
         case .transactions: return "list.bullet"
+        case .reports: return "document"
         }
     }
 }
