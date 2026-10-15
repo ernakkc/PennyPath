@@ -19,15 +19,9 @@ struct ReportsView: View {
     @State private var currentDate: Date = .now
     
     // MARK: - Computed Properties
-    private var filteredTransactions: [Transaction] {
-        allTransactions.filter { $0.date >= selectedDate.0 && $0.date <= selectedDate.1 }
-    }
-    private var totalIncome: Decimal {
-        filteredTransactions.filter { $0.type == .income }.reduce(0) { $0 + $1.amount }
-    }
-    private var totalExpense: Decimal {
-        filteredTransactions.filter { $0.type == .expense }.reduce(0) { $0 + $1.amount }
-    }
+    private var filteredTransactions: [Transaction] { allTransactions.filter { $0.date >= selectedDate.0 && $0.date <= selectedDate.1 } }
+    private var totalIncome: Decimal { filteredTransactions.filter { $0.type == .income }.reduce(0) { $0 + $1.amount } }
+    private var totalExpense: Decimal { filteredTransactions.filter { $0.type == .expense }.reduce(0) { $0 + $1.amount } }
     private var balance: Decimal { totalIncome - totalExpense }
     
     private var categoryBreakdown: [(category: Category, total: Decimal)] {
@@ -38,7 +32,6 @@ struct ReportsView: View {
     }
     
     private var trendData: [(label: String, income: Decimal, expense: Decimal)] {
-        // Group by month/year depending on selection type
         let calendar = Calendar.current
         let grouped = Dictionary(grouping: filteredTransactions) { (tx: Transaction) -> String in
             switch timeIntervalType {
@@ -59,7 +52,7 @@ struct ReportsView: View {
     }
     
     var body: some View {
-        ScrollView {
+        VStack {
             VStack(spacing: 20) {
                 /// HEADER
                 Text("Raporlar")
@@ -179,83 +172,6 @@ struct SummaryCard: View {
     }
 }
 
-// MARK: - Interval Navigation Card (Custom for this screen)
-struct IntervalNavigationCard: View {
-    @Binding var timeIntervalType: TimeIntervalTypes
-    @Binding var selectedDate: (Date, Date)
-    @Binding var currentDate: Date
-    
-    var body: some View {
-        HStack {
-            Button(action: { changeDate(by: -1) }) {
-                Image(systemName: "chevron.left")
-                    .padding(8)
-                    .background(.ultraThinMaterial, in: Circle())
-            }
-            
-            Spacer()
-            Text(intervalTitle)
-                .font(.title3.bold())
-            Spacer()
-            Button(action: { changeDate(by: 1) }) {
-                Image(systemName: "chevron.right")
-                    .padding(8)
-                    .background(.ultraThinMaterial, in: Circle())
-            }
-        }
-        .padding(.vertical, 10)
-        .background(AppColor.cardBackground)
-        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-        .overlay(
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .stroke(AppColor.border.opacity(0.4), lineWidth: 1)
-        )
-        .onAppear { updateSelectedDate() }
-    }
-    
-    private var intervalTitle: String {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "tr_TR")
-        switch timeIntervalType {
-        case .month:
-            formatter.dateFormat = "LLLL yyyy"
-            return formatter.string(from: currentDate).capitalized
-        case .year:
-            formatter.dateFormat = "yyyy"
-            return formatter.string(from: currentDate)
-        }
-    }
-    
-    private func changeDate(by value: Int) {
-        withAnimation(.easeInOut(duration: 0.2)) {
-            let calendar = Calendar.current
-            switch timeIntervalType {
-            case .month:
-                if let newDate = calendar.date(byAdding: .month, value: value, to: currentDate) {
-                    currentDate = newDate
-                }
-            case .year:
-                if let newDate = calendar.date(byAdding: .year, value: value, to: currentDate) {
-                    currentDate = newDate
-                }
-            }
-            updateSelectedDate()
-        }
-    }
-    private func updateSelectedDate() {
-        let calendar = Calendar.current
-        switch timeIntervalType {
-        case .month:
-            let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: currentDate)) ?? currentDate
-            let endOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth) ?? currentDate
-            selectedDate = (startOfMonth, endOfMonth)
-        case .year:
-            let startOfYear = calendar.date(from: calendar.dateComponents([.year], from: currentDate)) ?? currentDate
-            let endOfYear = calendar.date(byAdding: DateComponents(year: 1, day: -1), to: startOfYear) ?? currentDate
-            selectedDate = (startOfYear, endOfYear)
-        }
-    }
-}
 
 #Preview {
     ReportsView()

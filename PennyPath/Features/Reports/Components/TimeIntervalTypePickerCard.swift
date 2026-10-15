@@ -21,9 +21,9 @@ struct TimeIntervalTypePickerCard: View {
                 }
                 }) {
                     Text(secenek.rawValue)
-                        .font(.subheadline)
-                        .fontWeight(timeIntervalType == secenek ? .semibold : .medium)
-                        .frame(maxWidth: .infinity)
+                        .font(.headline)
+                        .fontWeight(timeIntervalType == secenek ? .semibold : .bold)
+                        .padding(.horizontal, 80)
                         .padding(.vertical, 8)
                         .foregroundStyle(timeIntervalType == secenek ? .white : .primary.opacity(0.7))
                         .background {
@@ -39,16 +39,8 @@ struct TimeIntervalTypePickerCard: View {
             }
         }
         
-        
+
     }
-}
-
-
-enum TimeIntervalTypes: String, CaseIterable, Codable, Identifiable {
-    case month = "Ay"
-    case year = "Yıl"
-    
-    var id: String { rawValue }
 }
 
 
