@@ -52,7 +52,7 @@ struct ReportsView: View {
     }
     
     var body: some View {
-        VStack {
+        ScrollView {
             VStack(spacing: 20) {
                 /// HEADER
                 Text("Raporlar")
@@ -73,37 +73,64 @@ struct ReportsView: View {
                 
                 
                 /// SUMMARY
-                HStack(spacing: 16) {
-                    SummaryItemCard(title: "Gelir", value: totalIncome, icon: "arrow.down.circle", color: AppColor.income)
-                    SummaryItemCard(title: "Gider", value: totalExpense, icon: "arrow.up.circle", color: AppColor.expense)
-                    SummaryItemCard(title: "Bakiye", value: balance, icon: "equal.circle", color: AppColor.accent)
-                }
-                .padding(.vertical, 4)
-                
-                /// TREND CHART
-                if !trendData.isEmpty {
-                    GroupBox {
-                        Chart {
-                            ForEach(trendData, id: \.label) { item in
-                                BarMark(
-                                    x: .value("Dönem", item.label),
-                                    y: .value("Gelir", NSDecimalNumber(decimal: item.income).doubleValue)
-                                )
-                                .foregroundStyle(AppColor.income)
-                                BarMark(
-                                    x: .value("Dönem", item.label),
-                                    y: .value("Gider", NSDecimalNumber(decimal: item.expense).doubleValue)
-                                )
-                                .foregroundStyle(AppColor.expense)
-                            }
+                AppCard {
+                    VStack {
+                        HStack(spacing: 16) {
+                            SummaryItemCard(title: "Gelir", value: totalIncome, icon: "arrow.down.circle", color: AppColor.income)
+                            Divider()
+                            SummaryItemCard(title: "Gider", value: totalExpense, icon: "arrow.up.circle", color: AppColor.expense)
+                            Divider()
+                            SummaryItemCard(title: "Bakiye", value: balance, icon: "equal.circle", color: AppColor.accent)
                         }
-                        .frame(height: 200)
-                        .padding(.top, 8)
-                    } label: {
-                        HStack { Image(systemName: "chart.bar"); Text("Dönemsel Gelir & Gider") }
+                        .padding(.vertical, 4)
+                        
+                        /// TREND CHART
+                        
+                        if !trendData.isEmpty {
+                            GroupBox {
+                                Chart {
+                                    ForEach(trendData, id: \.label) { item in
+                                        BarMark(
+                                            x: .value("Dönem", item.label),
+                                            y: .value("Gelir", NSDecimalNumber(decimal: item.income).doubleValue)
+                                        )
+                                        .foregroundStyle(AppColor.income)
+                                        BarMark(
+                                            x: .value("Dönem", item.label),
+                                            y: .value("Gider", NSDecimalNumber(decimal: item.expense).doubleValue)
+                                        )
+                                        .foregroundStyle(AppColor.expense)
+                                    }
+                                }
+                                .frame(height: 200)
+                                .padding(.top, 8)
+                            } label: {
+                                HStack { Image(systemName: "chart.bar"); Text("Dönemsel Gelir & Gider") }
+                            }
+                            .padding(.bottom, 12)
+                        }
+                        
+                        else {
+                            Chart {
+                                ForEach(trendData, id: \.label) { item in
+                                    BarMark(
+                                        x: .value("Dönem", item.label),
+                                        y: .value("Gelir", NSDecimalNumber(decimal: item.income).doubleValue)
+                                    )
+                                    .foregroundStyle(AppColor.income)
+                                    BarMark(
+                                        x: .value("Dönem", item.label),
+                                        y: .value("Gider", NSDecimalNumber(decimal: item.expense).doubleValue)
+                                    )
+                                    .foregroundStyle(AppColor.expense)
+                                }
+                            }
+                            
+                        }
                     }
-                    .padding(.bottom, 12)
+                    
                 }
+                
                 
                 /// CATEGORY BREAKDOWN
                 if !categoryBreakdown.isEmpty {
