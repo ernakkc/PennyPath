@@ -9,25 +9,34 @@ import SwiftUI
 
 struct TimeIntervalTypePickerCard: View {
     @Binding var timeIntervalType: TimeIntervalTypes
-    @Binding var selectedDate: (Date, Date)
     
+    @Namespace private var animation
     
     var body: some View {
-        VStack(spacing: 30) {
-            // Yan Yana Picker (Segmented Style)
-            Picker("Zaman Dilimi", selection: $timeIntervalType) {
-                ForEach(TimeIntervalTypes.allCases, id: \.self) { secenek in
-                    Text(secenek.rawValue).tag(secenek)
+        
+        HStack(spacing: 0) {
+            ForEach(TimeIntervalTypes.allCases, id: \.self) { secenek in
+                Button(action: {withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
+                    timeIntervalType = secenek
                 }
+                }) {
+                    Text(secenek.rawValue)
+                        .font(.subheadline)
+                        .fontWeight(timeIntervalType == secenek ? .semibold : .medium)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 8)
+                        .foregroundStyle(timeIntervalType == secenek ? .white : .primary.opacity(0.7))
+                        .background {
+                            if timeIntervalType == secenek {
+                                Capsule()
+                                    .fill(Color.accentColor)
+                                    .matchedGeometryEffect(id: "TimeTab", in: animation)
+                            }
+                        }
+                        .contentShape(Capsule())
+                }
+                .buttonStyle(.plain)
             }
-            .pickerStyle(.segmented)
-            .padding()
-               
-            
-            // silinecek
-            Text("Seçilen Süre: \(timeIntervalType.rawValue)")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
         }
         
         
@@ -46,8 +55,7 @@ enum TimeIntervalTypes: String, CaseIterable, Codable, Identifiable {
 
 #Preview {
     @Previewable @State var previewTimeIntervalType: TimeIntervalTypes = .month
-    @Previewable @State var previewSelectedDate: (Date, Date) = (.now, .now)
     
-    TimeIntervalTypePickerCard(timeIntervalType: $previewTimeIntervalType, selectedDate: $previewSelectedDate)
+    TimeIntervalTypePickerCard(timeIntervalType: $previewTimeIntervalType)
 }
 
