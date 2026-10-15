@@ -14,29 +14,22 @@ struct IntervalNavigationCard: View {
     
     var body: some View {
         HStack {
+            Spacer()
             Button(action: { changeDate(by: -1) }) {
-                Image(systemName: "chevron.left")
-                    .padding(8)
-                    .background(.ultraThinMaterial, in: Circle())
+                Image(systemName: "chevron.left").padding(8)
+            }
+            
+            Text(intervalTitle).font(.title3.bold())
+                .padding(.horizontal, 32)
+            
+            Button(action: { changeDate(by: 1) }) {
+                Image(systemName: "chevron.right").padding(8)
             }
             
             Spacer()
-            Text(intervalTitle)
-                .font(.title3.bold())
-            Spacer()
-            Button(action: { changeDate(by: 1) }) {
-                Image(systemName: "chevron.right")
-                    .padding(8)
-                    .background(.ultraThinMaterial, in: Circle())
-            }
         }
         .padding(.vertical, 10)
-        .background(AppColor.cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-        .overlay(
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .stroke(AppColor.border.opacity(0.4), lineWidth: 1)
-        )
         .onAppear { updateSelectedDate() }
     }
     
@@ -86,5 +79,12 @@ struct IntervalNavigationCard: View {
 
 
 #Preview {
-    IntervalNavigationCard(timeIntervalType: <#T##TimeIntervalTypes#>, selectedDate: <#T##(Date, Date)#>, currentDate: <#T##Date#>)
+    @Previewable @State var previewTimeIntervalType: TimeIntervalTypes = .month
+    @Previewable @State var previewSelectedDate: (Date, Date) = (.now, .now)
+    @Previewable @State var previewCurrentDate: Date = .now
+    IntervalNavigationCard(
+        timeIntervalType: $previewTimeIntervalType,
+        selectedDate: $previewSelectedDate,
+        currentDate: $previewCurrentDate
+    )
 }

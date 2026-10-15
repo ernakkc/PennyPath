@@ -71,11 +71,12 @@ struct ReportsView: View {
                     currentDate: $currentDate
                 )
                 
-                /// SUMMARY CARDS
+                
+                /// SUMMARY
                 HStack(spacing: 16) {
-                    SummaryCard(title: "Gelir", value: totalIncome, icon: "arrow.down.circle", color: AppColor.income)
-                    SummaryCard(title: "Gider", value: totalExpense, icon: "arrow.up.circle", color: AppColor.expense)
-                    SummaryCard(title: "Bakiye", value: balance, icon: "equal.circle", color: AppColor.accent)
+                    SummaryItemCard(title: "Gelir", value: totalIncome, icon: "arrow.down.circle", color: AppColor.income)
+                    SummaryItemCard(title: "Gider", value: totalExpense, icon: "arrow.up.circle", color: AppColor.expense)
+                    SummaryItemCard(title: "Bakiye", value: balance, icon: "equal.circle", color: AppColor.accent)
                 }
                 .padding(.vertical, 4)
                 
@@ -139,36 +140,6 @@ struct ReportsView: View {
         .animation(.easeInOut, value: timeIntervalType)
         .animation(.easeInOut, value: selectedDate.0)
         .animation(.easeInOut, value: selectedDate.1)
-    }
-}
-
-// MARK: - Summary Card
-struct SummaryCard: View {
-    var title: String
-    var value: Decimal
-    var icon: String
-    var color: Color
-    
-    var body: some View {
-        VStack(spacing: 10) {
-            Image(systemName: icon)
-                .font(.system(size: 32, weight: .bold))
-                .foregroundStyle(.white)
-                .shadow(radius: 4, x: 0, y: 2)
-                .padding(10)
-                .background(color.gradient)
-                .clipShape(Circle())
-            Text(title)
-                .font(.headline)
-                .foregroundStyle(.secondary)
-            Text(value, format: .currency(code: "TRY"))
-                .font(.title3.bold())
-                .foregroundStyle(color)
-        }
-        .padding()
-        .background(.thinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-        .shadow(color: color.opacity(0.09), radius: 6, x: 0, y: 3)
     }
 }
 
